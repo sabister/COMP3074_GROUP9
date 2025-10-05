@@ -17,14 +17,32 @@ public class CollectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
 
+        // Apply padding for edge-to-edge display
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
+        setupCardActions();
+        setupBottomNavigation();
+    }
+
+    private void setupCardActions() {
         Button detailsButton = findViewById(R.id.btn_det);
-        Button searchButton = findViewById(R.id.btn_search);
-        Button collectionButton = findViewById(R.id.btn_col);
+
         detailsButton.setOnClickListener(v -> {
             Intent intent = new Intent(CollectionActivity.this, InsideCollectionActivity.class);
             startActivity(intent);
         });
+
+    }
+
+    private void setupBottomNavigation() {
+        // Find the buttons from the layout
+        Button searchButton = findViewById(R.id.btn_search);
+        Button collectionButton = findViewById(R.id.btn_col);
+        Button newEntryButton = findViewById(R.id.btn_new); // Corrected variable name
 
         searchButton.setOnClickListener(v -> {
             Intent intent = new Intent(CollectionActivity.this, MainActivity.class);
@@ -32,6 +50,11 @@ public class CollectionActivity extends AppCompatActivity {
         });
 
         collectionButton.setOnClickListener(v -> {
+        });
+
+        newEntryButton.setOnClickListener(v -> {
+            Intent intent = new Intent(CollectionActivity.this, NewActivity.class);
+            startActivity(intent);
         });
     }
 

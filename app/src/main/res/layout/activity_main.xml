@@ -64,10 +64,11 @@
                     android:paddingBottom="8dp" />
 
                 <Button
+                    android:id="@+id/rest_det"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Details"
-                    android:layout_gravity="end" />
+                    android:layout_gravity="end"
+                    android:text="Details" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

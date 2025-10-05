@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.G9_comp3074">
         <activity
+            android:name=".AboutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RestActivity"
+            android:exported="false" />
+        <activity
             android:name=".NewActivity"
             android:exported="false" />
         <activity

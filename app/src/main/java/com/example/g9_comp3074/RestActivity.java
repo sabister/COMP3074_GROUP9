@@ -10,50 +10,34 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class RestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_new);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        setupNavigation();
-        setupCardActions();
+        setupBottomNavigation();
     }
-    private void setupCardActions() {
-        Button detailsButton = findViewById(R.id.rest_det);
-
-        detailsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, RestActivity.class);
-            startActivity(intent);
-        });
-
-    }
-    private void setupNavigation() {
-        Button newEntryButton = findViewById(R.id.btn_new);
-        // You can also find your other buttons here
-        Button collectionButton = findViewById(R.id.btn_col);
+    private void setupBottomNavigation() {
         Button searchButton = findViewById(R.id.btn_search);
+        Button collectionButton = findViewById(R.id.btn_col);
 
-        newEntryButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, NewActivity.class);
+        searchButton.setOnClickListener(v -> {
+            Intent intent = new Intent(RestActivity.this, MainActivity.class);
             startActivity(intent);
         });
 
         collectionButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, CollectionActivity.class);
+            Intent intent = new Intent(RestActivity.this, CollectionActivity.class);
             startActivity(intent);
         });
-
-        searchButton.setOnClickListener(v -> {
-        });
-
 
     }
 }
