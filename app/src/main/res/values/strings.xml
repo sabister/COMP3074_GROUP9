@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">G9_comp3074</string>
+    <string name="btn_search">Search</string>
+    <string name="btn_col">Collection</string>
+    <string name="btn_new">New Entry</string>
+    <string name="btn_about">About</string>
+    <string name="btn_more">More</string>
+</resources>
