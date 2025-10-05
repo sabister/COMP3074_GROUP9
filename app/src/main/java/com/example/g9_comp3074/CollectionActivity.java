@@ -16,8 +16,6 @@ public class CollectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
-
-        // Apply padding for edge-to-edge display
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -39,21 +37,22 @@ public class CollectionActivity extends AppCompatActivity {
     }
 
     private void setupBottomNavigation() {
-        // Find the buttons from the layout
         Button searchButton = findViewById(R.id.btn_search);
-        Button collectionButton = findViewById(R.id.btn_col);
-        Button newEntryButton = findViewById(R.id.btn_new); // Corrected variable name
+        Button newEntryButton = findViewById(R.id.btn_new);
+        Button aboutButton = findViewById(R.id.btn_about);
 
         searchButton.setOnClickListener(v -> {
             Intent intent = new Intent(CollectionActivity.this, MainActivity.class);
             startActivity(intent);
         });
 
-        collectionButton.setOnClickListener(v -> {
-        });
-
         newEntryButton.setOnClickListener(v -> {
             Intent intent = new Intent(CollectionActivity.this, NewActivity.class);
+            startActivity(intent);
+        });
+
+        aboutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(CollectionActivity.this, AboutActivity.class);
             startActivity(intent);
         });
     }

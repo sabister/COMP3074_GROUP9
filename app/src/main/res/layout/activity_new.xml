@@ -85,6 +85,12 @@
                 android:layout_height="200dp"
                 app:srcCompat="@drawable/_0180427_googlemaps" />
 
+            <Button
+                android:id="@+id/btn_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create Entry" />
+
 
         </LinearLayout>
     </ScrollView>

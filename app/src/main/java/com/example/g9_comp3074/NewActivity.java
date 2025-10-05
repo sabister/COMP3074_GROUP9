@@ -28,6 +28,7 @@ public class NewActivity extends AppCompatActivity {
     private void setupBottomNavigation() {
         Button searchButton = findViewById(R.id.btn_search);
         Button collectionButton = findViewById(R.id.btn_col);
+        Button aboutButton = findViewById(R.id.btn_about);
 
         searchButton.setOnClickListener(v -> {
             Intent intent = new Intent(NewActivity.this, MainActivity.class);
@@ -36,6 +37,11 @@ public class NewActivity extends AppCompatActivity {
 
         collectionButton.setOnClickListener(v -> {
             Intent intent = new Intent(NewActivity.this, CollectionActivity.class);
+            startActivity(intent);
+        });
+
+        aboutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(NewActivity.this, AboutActivity.class);
             startActivity(intent);
         });
 

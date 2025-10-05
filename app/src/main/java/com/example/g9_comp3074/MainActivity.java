@@ -37,9 +37,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setupNavigation() {
         Button newEntryButton = findViewById(R.id.btn_new);
-        // You can also find your other buttons here
         Button collectionButton = findViewById(R.id.btn_col);
-        Button searchButton = findViewById(R.id.btn_search);
+        Button aboutButton = findViewById(R.id.btn_about);
 
         newEntryButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, NewActivity.class);
@@ -51,9 +50,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        searchButton.setOnClickListener(v -> {
+        aboutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(intent);
         });
-
 
     }
 }

@@ -16,7 +16,7 @@ public class RestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_new);
+        setContentView(R.layout.activity_rest);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -28,6 +28,8 @@ public class RestActivity extends AppCompatActivity {
     private void setupBottomNavigation() {
         Button searchButton = findViewById(R.id.btn_search);
         Button collectionButton = findViewById(R.id.btn_col);
+        Button aboutButton = findViewById(R.id.btn_about);
+        Button newEntryButton = findViewById(R.id.btn_new);
 
         searchButton.setOnClickListener(v -> {
             Intent intent = new Intent(RestActivity.this, MainActivity.class);
@@ -39,5 +41,14 @@ public class RestActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        aboutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(RestActivity.this, AboutActivity.class);
+            startActivity(intent);
+        });
+
+        newEntryButton.setOnClickListener( v -> {
+            Intent intent = new Intent(RestActivity.this, NewActivity.class);
+            startActivity(intent);
+        });
     }
 }

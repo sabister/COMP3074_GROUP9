@@ -1,6 +1,8 @@
 package com.example.g9_comp3074;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +22,28 @@ public class AboutActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        setupBottomNavigation();
+    }
+    private void setupBottomNavigation() {
+        Button searchButton = findViewById(R.id.btn_search);
+        Button collectionButton = findViewById(R.id.btn_col);
+        Button newEntryButton = findViewById(R.id.btn_new);
+
+        searchButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AboutActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+
+        collectionButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AboutActivity.this, CollectionActivity.class);
+            startActivity(intent);
+        });
+
+        newEntryButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AboutActivity.this, NewActivity.class);
+            startActivity(intent);
+        });
     }
 }
+

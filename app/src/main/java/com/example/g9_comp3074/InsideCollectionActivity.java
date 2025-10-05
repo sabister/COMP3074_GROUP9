@@ -22,12 +22,22 @@ public class InsideCollectionActivity extends AppCompatActivity {
             return insets;
         });
         setupBottomNavigation();
+        setupCardActions();
     }
 
+    private void setupCardActions() {
+        Button detailsButton = findViewById(R.id.btn_details);
+
+        detailsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(InsideCollectionActivity.this, RestActivity.class);
+            startActivity(intent);
+        });
+    }
     private void setupBottomNavigation() {
         Button searchButton = findViewById(R.id.btn_search);
         Button collectionButton = findViewById(R.id.btn_col);
         Button NewEntryButton = findViewById(R.id.btn_new);
+        Button aboutButton = findViewById(R.id.btn_about);
 
         searchButton.setOnClickListener(v -> {
             Intent intent = new Intent(InsideCollectionActivity.this, MainActivity.class);
@@ -38,8 +48,14 @@ public class InsideCollectionActivity extends AppCompatActivity {
             Intent intent = new Intent(InsideCollectionActivity.this, CollectionActivity.class);
             startActivity(intent);
         });
+
         NewEntryButton.setOnClickListener(v -> {
             Intent intent = new Intent(InsideCollectionActivity.this, NewActivity.class);
+            startActivity(intent);
+        });
+
+        aboutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(InsideCollectionActivity.this, AboutActivity.class);
             startActivity(intent);
         });
     }
