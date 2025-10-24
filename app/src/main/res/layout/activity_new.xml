@@ -17,13 +17,15 @@
         app:title="New Entry"
         app:navigationIcon="@drawable/abc_ic_ab_back_material" />
 
-        <TextView
+        <EditText
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Restaurant Name"
-            android:textColor="#FFFFFF"
+            android:background="#FFFFFF"
+            android:hint="Restaurant Name"
+            android:layout_marginTop="16dp"
+            android:textColor="#000000"
             android:textSize="20sp" />
 
     <ScrollView
@@ -47,45 +49,70 @@
                 android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/white"
-                android:text="Your content here"
+                android:hint="Restaurant Description"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:lines="4"
+                android:scrollHorizontally="false"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textColorHighlight="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
 
-            <TextView
+            <!-- TODO: if possible, make the surrounding border black-->
+            <EditText
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Phone#:" />
+                android:layout_margin="10sp"
+                android:background="@color/white"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
 
-            <TextView
+            <EditText
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Hours:" />
+                android:layout_margin="10sp"
+                android:background="@color/white"
+                android:hint="Operation Hours"
 
-            <TextView
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <EditText
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Address:" />
+                android:layout_margin="10sp"
+                android:background="@color/white"
+                android:hint="Address"
+                android:inputType="textPostalAddress"
 
-            <TextView
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <!--TODO: HOW DOES TAGS WORK-->
+            <EditText
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Tag:" />
+                android:layout_margin="10sp"
+                android:background="@color/white"
+                android:hint="Tag"
+
+                android:textAlignment="center"
+                android:textColor="@color/black" />
 
             <ImageView
                 android:id="@+id/imageView2"
