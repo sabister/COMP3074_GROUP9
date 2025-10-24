@@ -10,6 +10,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 public class AboutActivity extends AppCompatActivity {
 
     @Override
@@ -17,6 +19,12 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_about);
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(v -> finish());
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -25,15 +33,13 @@ public class AboutActivity extends AppCompatActivity {
 
         setupBottomNavigation();
     }
+
     private void setupBottomNavigation() {
         Button searchButton = findViewById(R.id.btn_search);
         Button collectionButton = findViewById(R.id.btn_col);
         Button newEntryButton = findViewById(R.id.btn_new);
 
-        searchButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AboutActivity.this, MainActivity.class);
-            startActivity(intent);
-        });
+        searchButton.setOnClickListener(v -> finish());
 
         collectionButton.setOnClickListener(v -> {
             Intent intent = new Intent(AboutActivity.this, CollectionActivity.class);
@@ -46,4 +52,3 @@ public class AboutActivity extends AppCompatActivity {
         });
     }
 }
-
