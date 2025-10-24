@@ -3,6 +3,7 @@ package com.example.g9_comp3074;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +21,25 @@ public class InsideCollectionActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_inside_collection);
 
+        // Toolbar setup
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
+
+        String collectionTitle = getIntent().getStringExtra("collection_title");
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Collection Details");
+            // Show the collection title as toolbar title
+            if (collectionTitle != null && !collectionTitle.isEmpty()) {
+                getSupportActionBar().setTitle(collectionTitle);
+            } else {
+                getSupportActionBar().setTitle("Collection Details");
+            }
+        }
+
+        TextView headerTextView = findViewById(R.id.textView); // assuming your XML has this TextView
+        if (collectionTitle != null && headerTextView != null) {
+            headerTextView.setText(collectionTitle);
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
