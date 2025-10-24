@@ -10,12 +10,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 public class CollectionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_collection);
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
+        getSupportActionBar().setTitle("My Collection");
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -28,12 +37,10 @@ public class CollectionActivity extends AppCompatActivity {
 
     private void setupCardActions() {
         Button detailsButton = findViewById(R.id.btn_det);
-
         detailsButton.setOnClickListener(v -> {
             Intent intent = new Intent(CollectionActivity.this, InsideCollectionActivity.class);
             startActivity(intent);
         });
-
     }
 
     private void setupBottomNavigation() {
@@ -41,10 +48,7 @@ public class CollectionActivity extends AppCompatActivity {
         Button newEntryButton = findViewById(R.id.btn_new);
         Button aboutButton = findViewById(R.id.btn_about);
 
-        searchButton.setOnClickListener(v -> {
-            Intent intent = new Intent(CollectionActivity.this, MainActivity.class);
-            startActivity(intent);
-        });
+        searchButton.setOnClickListener(v -> finish());
 
         newEntryButton.setOnClickListener(v -> {
             Intent intent = new Intent(CollectionActivity.this, NewActivity.class);
@@ -56,5 +60,4 @@ public class CollectionActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
-
 }

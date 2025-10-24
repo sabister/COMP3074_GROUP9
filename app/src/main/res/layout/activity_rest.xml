@@ -9,6 +9,14 @@
     android:background="#000000"
     tools:context=".RestActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorSurface"
+        app:title="Entry Details"
+        app:navigationIcon="@drawable/abc_ic_ab_back_material" />
+
     <Button
         android:id="@+id/button7"
         android:layout_width="109dp"

@@ -9,6 +9,14 @@
     android:background="#000000"
     tools:context=".CollectionActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorSurface"
+        app:title="Collection"
+        app:navigationIcon="@drawable/abc_ic_ab_back_material" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
