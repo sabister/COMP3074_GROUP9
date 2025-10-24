@@ -47,68 +47,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="12dp">
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/linearLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="12dp"-->
-<!--                android:padding="16dp"-->
-<!--                android:background="@drawable/card_background">-->
-
-<!--                &lt;!&ndash; 1. The Title TextView &ndash;&gt;-->
-<!--                <TextView-->
-<!--                    android:id="@+id/textView2"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginEnd="16dp"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="Restaurant i want to try"-->
-<!--                    android:textColor="#FFFFFF"-->
-<!--                    android:textSize="18sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toStartOf="@+id/btn_det"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                &lt;!&ndash; 2. The First "Details" Button &ndash;&gt;-->
-<!--                <Button-->
-<!--                    android:id="@+id/btn_det"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Details"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:layout_constraintBottom_toTopOf="@+id/button3"-->
-<!--                    app:layout_constraintVertical_chainStyle="packed" />-->
-
-<!--                &lt;!&ndash; 3. The Second "Details" Button &ndash;&gt;-->
-
-<!--                &lt;!&ndash; 4. The Third "Details" Button &ndash;&gt;-->
-<!--                <Button-->
-<!--                    android:id="@+id/button3"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="Edit"-->
-<!--                    app:layout_constraintBottom_toTopOf="@+id/button4"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintHorizontal_bias="1.0"-->
-<!--                    app:layout_constraintStart_toEndOf="@+id/textView2"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/btn_det" />-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/button4"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="Delete"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/button3" />-->
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
         </LinearLayout>
     </ScrollView>
 

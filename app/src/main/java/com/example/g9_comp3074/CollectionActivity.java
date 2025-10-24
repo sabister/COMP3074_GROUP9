@@ -64,14 +64,20 @@ public class CollectionActivity extends AppCompatActivity {
         cardContainer.removeAllViews();
         for (String title : titles) {
             // Inflate the reusable component without attaching yet
-            View card = getLayoutInflater().inflate(R.layout.collection_component, cardContainer, false);
+            View card = getLayoutInflater().inflate(
+                    R.layout.restaurant_card_component,  // <<— updated layout name
+                    cardContainer,
+                    false
+            );
 
-            TextView tvTitle = card.findViewById(R.id.textView2);
-            Button btnDetails = card.findViewById(R.id.btn_det);
-            Button btnEdit = card.findViewById(R.id.button3);
-            Button btnDelete = card.findViewById(R.id.button4);
+            TextView tvTitle    = card.findViewById(R.id.tvRestaurantTitle);
+            TextView tvSubtitle = card.findViewById(R.id.tvRestaurantSubtitle);
+            Button btnDetails   = card.findViewById(R.id.btnDetails);
+            Button btnEdit      = card.findViewById(R.id.btnEdit);
+            Button btnDelete    = card.findViewById(R.id.btnDelete);
 
             tvTitle.setText(title);
+            tvSubtitle.setText("…"); // set something meaningful if you have it
 
             btnDetails.setOnClickListener(v -> {
                 Intent intent = new Intent(CollectionActivity.this, InsideCollectionActivity.class);
@@ -91,6 +97,7 @@ public class CollectionActivity extends AppCompatActivity {
             cardContainer.addView(card);
         }
     }
+
 
     private void setupBottomNavigation() {
         Button searchButton = findViewById(R.id.btn_search);
