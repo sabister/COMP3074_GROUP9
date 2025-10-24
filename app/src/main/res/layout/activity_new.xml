@@ -17,16 +17,16 @@
         app:title="New Entry"
         app:navigationIcon="@drawable/abc_ic_ab_back_material" />
 
-        <EditText
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:background="#FFFFFF"
-            android:hint="Restaurant Name"
-            android:layout_marginTop="16dp"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+    <EditText
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:hint="Restaurant Name"
+        android:layout_marginTop="16dp"
+        android:textColor="#000000"
+        android:textSize="20sp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -102,23 +102,33 @@
                 android:textAlignment="center"
                 android:textColor="@color/black" />
 
+
             <!--TODO: HOW DOES TAGS WORK-->
-            <EditText
-                android:id="@+id/textView7"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tag_chip_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10sp"
-                android:background="@color/white"
-                android:hint="Tag"
+                android:layout_marginTop="8dp"
+                app:singleLine="false">
 
-                android:textAlignment="center"
-                android:textColor="@color/black" />
+            </com.google.android.material.chip.ChipGroup>
+            <Button
+                android:id="@+id/btn_add_tag"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+ Add New Tag"
+                android:layout_gravity="start"/>
 
-            <ImageView
-                android:id="@+id/imageView2"
+            <!-- This container will hold the Google Map fragment -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/_0180427_googlemaps" />
+                android:layout_height="250dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"/>
+
 
             <Button
                 android:id="@+id/btn_create"

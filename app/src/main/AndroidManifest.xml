@@ -31,6 +31,9 @@
             android:name=".CollectionActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB3uQGAhw4kS72mEqmyTobC15ubBPjMmrE" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
