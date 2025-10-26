@@ -49,9 +49,9 @@ public class RestActivity extends AppCompatActivity {
         if (restaurant != null) {
             tvName.setText(restaurant.name);
             tvDescription.setText(restaurant.description);
-            tvPhone.setText(restaurant.phone);
-            tvHours.setText(restaurant.hours);
-            tvAddress.setText(restaurant.address);
+            tvPhone.setText(getString(R.string.label_phone, restaurant.phone));
+            tvHours.setText(getString(R.string.label_hours, restaurant.hours));
+            tvAddress.setText(getString(R.string.label_address, restaurant.address));
         }
         setupBottomNavigation();
     }
