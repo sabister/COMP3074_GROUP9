@@ -3,6 +3,9 @@ package com.example.g9_comp3074;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,8 +13,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private RestaurantDatabase db;
+    private RecyclerView rvRestaurants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,21 +30,25 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        setupNavigation();
-        setupCardActions();
         db = Room.databaseBuilder(getApplicationContext(),
                         RestaurantDatabase.class, "restaurant_db")
                 .allowMainThreadQueries() // only for small/simple data; move to background for production
                 .build();
+
+        setupNavigation();
+        setupRestaurantCards();
     }
-    private void setupCardActions() {
-        Button detailsButton = findViewById(R.id.rest_det);
 
-        detailsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, RestActivity.class);
-            startActivity(intent);
-        });
+    private void setupRestaurantCards() {
+        rvRestaurants = findViewById(R.id.rvRestaurants); // Make sure this exists in activity_main.xml
+        rvRestaurants.setLayoutManager(new LinearLayoutManager(this));
 
+        // Fetch all restaurants from DB
+        List<Restaurant> restaurants = db.restaurantDao().getAllRestaurants();
+
+        // Attach adapter
+        RestaurantCardAdapter adapter = new RestaurantCardAdapter(this, restaurants, db.restaurantDao());
+        rvRestaurants.setAdapter(adapter);
     }
     private void setupNavigation() {
         Button newEntryButton = findViewById(R.id.btn_new);

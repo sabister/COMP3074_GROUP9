@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
@@ -9,6 +10,7 @@
     android:background="#000000"
     tools:context=".RestActivity">
 
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -17,103 +19,77 @@
         app:title="Entry Details"
         app:navigationIcon="@drawable/abc_ic_ab_back_material" />
 
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="109dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="Options" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:gravity="center"
-        android:text="PIZZA PIZZA PIZZ"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp" />
-
+    <!-- Scrollable restaurant details -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
         <LinearLayout
-            android:id="@+id/cardContainer"
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:padding="16dp">
 
-
-
+            <!-- Restaurant Name -->
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Description:"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp" />
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/imageView4"
+            <!-- Restaurant Description -->
+            <TextView
+                android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/white"
-                android:text="Description of the restaurant, what they're about, the type of
-food they serve, the inspiration or reasoning behind the restaurant."
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/white"
+                android:layout_marginTop="12dp"
+                android:textColor="@android:color/white"
                 android:textSize="16sp" />
 
-
+            <!-- Phone -->
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tvPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Phone#: 123-456-7890" />
+                android:layout_marginTop="12dp"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
 
+            <!-- Hours -->
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/tvHours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Hours:9am-9pm Weekdays" />
+                android:layout_marginTop="4dp"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
 
+            <!-- Address -->
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Address: 123-Location St" />
+                android:layout_marginTop="4dp"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
 
+            <!-- Tags -->
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/tvTags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Tag:HALA" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/_0180427_googlemaps" />
-
+                android:layout_marginTop="4dp"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
 
         </LinearLayout>
     </ScrollView>
 
-
+    <!-- Bottom Navigation -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
@@ -128,11 +104,11 @@ food they serve, the inspiration or reasoning behind the restaurant."
             android:layout_height="wrap_content"
             android:text="@string/btn_search"
             android:textSize="10sp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_col"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"/>
 
         <Button
             android:id="@+id/btn_col"
@@ -179,4 +155,5 @@ food they serve, the inspiration or reasoning behind the restaurant."
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>
