@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import androidx.appcompat.widget.SearchView;
+
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,23 +39,36 @@ public class MainActivity extends AppCompatActivity {
         });
 
         db = RestaurantDatabase.getInstance(this);
+        initSearch();
         setupNavigation();
         setupRestaurantCards();
 
-        SearchView searchView = findViewById(R.id.searchView);
-        TextView searchText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-        ImageView searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
-        ImageView closeIcon = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+    }
+    private void initSearch(){
+        SearchView searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
 
-        // --- Apply color styling ---
-        if (searchText != null) {
-            searchText.setTextColor(Color.WHITE);
-            searchText.setHintTextColor(Color.GRAY);
-        }
-        if (searchIcon != null) searchIcon.setColorFilter(Color.WHITE);
-        if (closeIcon != null) closeIcon.setColorFilter(Color.WHITE);
+            @Override
+            public boolean onQueryTextChange(String s) {
+                List<Restaurant> allRestaurants = db.restaurantDao().getAllRestaurants();
+                List<Restaurant> filteredList = new ArrayList<>();
 
-        searchView.setBackgroundColor(Color.parseColor("#222222"));
+                for (Restaurant restaurant : allRestaurants) {
+                    if (restaurant.getName().toLowerCase().contains(s.toLowerCase())) {
+                        filteredList.add(restaurant);
+                    }
+                }
+
+                RestaurantCardAdapter adapter = new RestaurantCardAdapter(MainActivity.this, filteredList, db.restaurantDao());
+                rvRestaurants.setAdapter(adapter);
+                return false;
+            }
+        });
+
     }
 
     private void setupRestaurantCards() {

@@ -23,4 +23,8 @@ public class Restaurant {
         this.address = address;
         this.tags = tags;
     }
+
+    public String getName() {
+        return name;
+    }
 }
