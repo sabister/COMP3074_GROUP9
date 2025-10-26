@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setupRestaurantCards();
 
     }
+    //search bar
     private void initSearch(){
         SearchView searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

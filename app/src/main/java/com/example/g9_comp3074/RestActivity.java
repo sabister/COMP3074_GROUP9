@@ -45,6 +45,7 @@ public class RestActivity extends AppCompatActivity {
         TextView tvPhone = findViewById(R.id.tvPhone);
         TextView tvHours = findViewById(R.id.tvHours);
         TextView tvAddress = findViewById(R.id.tvAddress);
+        TextView tvTags = findViewById(R.id.tvTags);
 
         if (restaurant != null) {
             tvName.setText(restaurant.name);
@@ -52,6 +53,7 @@ public class RestActivity extends AppCompatActivity {
             tvPhone.setText(getString(R.string.label_phone, restaurant.phone));
             tvHours.setText(getString(R.string.label_hours, restaurant.hours));
             tvAddress.setText(getString(R.string.label_address, restaurant.address));
+            tvTags.setText(getString(R.string.label_tags, restaurant.tags));
         }
         setupBottomNavigation();
     }
