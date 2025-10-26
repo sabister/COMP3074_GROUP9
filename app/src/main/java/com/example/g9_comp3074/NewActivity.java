@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.room.Room;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -46,6 +47,9 @@ public class NewActivity extends AppCompatActivity implements OnMapReadyCallback
     private Handler handler = new Handler();
     private Runnable searchRunnable;
 
+    private RestaurantDatabase db;
+    private RestaurantDao restaurantDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,12 @@ public class NewActivity extends AppCompatActivity implements OnMapReadyCallback
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        db = Room.databaseBuilder(getApplicationContext(),
+                        RestaurantDatabase.class, "restaurant_database")
+                .allowMainThreadQueries() // temporary for testing (not for production)
+                .build();
+
+        restaurantDao = db.restaurantDao();
     }
 
     // 🗺️ Initialize Google Map
@@ -145,12 +155,14 @@ public class NewActivity extends AppCompatActivity implements OnMapReadyCallback
                 return;
             }
 
-            Log.d("NewEntryData", "Name: " + name);
-            Log.d("NewEntryData", "Description: " + description);
-            Log.d("NewEntryData", "Phone: " + phone);
-            Log.d("NewEntryData", "Hours: " + hours);
-            Log.d("NewEntryData", "Address: " + address);
-            Log.d("NewEntryData", "Tags: " + selectedTags.toString());
+            // Convert tags list to a single comma-separated string for storage
+            String tagsString = String.join(",", selectedTags);
+
+            // Create restaurant object
+            Restaurant restaurant = new Restaurant(name, description, phone, hours, address, tagsString);
+
+            // Insert into database
+            restaurantDao.insert(restaurant);
 
             Toast.makeText(this, "Entry for '" + name + "' created!", Toast.LENGTH_SHORT).show();
             finish();

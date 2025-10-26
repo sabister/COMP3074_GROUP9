@@ -3,7 +3,7 @@ package com.example.g9_comp3074;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-
+import androidx.room.Room;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+    private RestaurantDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
 
         setupNavigation();
         setupCardActions();
+        db = Room.databaseBuilder(getApplicationContext(),
+                        RestaurantDatabase.class, "restaurant_db")
+                .allowMainThreadQueries() // only for small/simple data; move to background for production
+                .build();
     }
     private void setupCardActions() {
         Button detailsButton = findViewById(R.id.rest_det);

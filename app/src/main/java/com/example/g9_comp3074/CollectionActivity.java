@@ -1,5 +1,6 @@
 package com.example.g9_comp3074;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -19,9 +23,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CollectionActivity extends AppCompatActivity {
-
+    private RecyclerView recyclerView;
+    private RestaurantAdapter adapter;
+    private RestaurantDao restaurantDao;
     private LinearLayout cardContainer;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,48 +62,26 @@ public class CollectionActivity extends AppCompatActivity {
         );
 
         // Inflate one card per item
-        populateCards(titles);
+        // populateCards(titles);
 
         setupBottomNavigation();
+        RestaurantDatabase db = Room.databaseBuilder(getApplicationContext(),
+                        RestaurantDatabase.class, "restaurant_database")
+                .allowMainThreadQueries()
+                .build();
+
+        restaurantDao = db.restaurantDao();
+        // Load data
+        List<Restaurant> restaurants = restaurantDao.getAllRestaurants();
+
+// Setup RecyclerView
+        recyclerView = findViewById(R.id.recyclerViewRestaurants);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new RestaurantAdapter(restaurants);
+        recyclerView.setAdapter(adapter);
     }
 
-    private void populateCards(List<String> titles) {
-        cardContainer.removeAllViews();
-        for (String title : titles) {
-            // Inflate the reusable component without attaching yet
-            View card = getLayoutInflater().inflate(
-                    R.layout.restaurant_card_component,  // <<— updated layout name
-                    cardContainer,
-                    false
-            );
 
-            TextView tvTitle    = card.findViewById(R.id.tvRestaurantTitle);
-            TextView tvSubtitle = card.findViewById(R.id.tvRestaurantSubtitle);
-            Button btnDetails   = card.findViewById(R.id.btnDetails);
-            Button btnEdit      = card.findViewById(R.id.btnEdit);
-            Button btnDelete    = card.findViewById(R.id.btnDelete);
-
-            tvTitle.setText(title);
-            tvSubtitle.setText("…"); // set something meaningful if you have it
-
-            btnDetails.setOnClickListener(v -> {
-                Intent intent = new Intent(CollectionActivity.this, InsideCollectionActivity.class);
-                intent.putExtra("collection_title", title);
-                startActivity(intent);
-            });
-
-            btnEdit.setOnClickListener(v ->
-                    android.widget.Toast.makeText(this, "Edit: " + title, android.widget.Toast.LENGTH_SHORT).show()
-            );
-
-            btnDelete.setOnClickListener(v -> {
-                cardContainer.removeView(card);
-                android.widget.Toast.makeText(this, "Deleted: " + title, android.widget.Toast.LENGTH_SHORT).show();
-            });
-
-            cardContainer.addView(card);
-        }
-    }
 
 
     private void setupBottomNavigation() {
