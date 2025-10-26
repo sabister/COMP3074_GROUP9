@@ -20,7 +20,7 @@
             android:id="@+id/logoImage"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_logo"
+            android:src="@drawable/heresomelogo"
             android:contentDescription="App Logo"
             android:background="@drawable/circle_background"
             android:scaleType="centerCrop" />
