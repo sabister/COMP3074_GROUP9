@@ -32,8 +32,6 @@
             android:text="My Collection"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
-
-
     </LinearLayout>
 
     <ScrollView

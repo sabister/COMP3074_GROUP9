@@ -3,6 +3,7 @@ package com.example.g9_comp3074;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +33,26 @@ public class RestActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        int restaurantId = getIntent().getIntExtra("restaurantId", -1);
+        if (restaurantId == -1) {
+            finish();
+            return;
+        }
+        RestaurantDatabase db = RestaurantDatabase.getInstance(this);
+        Restaurant restaurant = db.restaurantDao().getRestaurantById(restaurantId);
+        TextView tvName = findViewById(R.id.tvName);
+        TextView tvDescription = findViewById(R.id.tvDescription);
+        TextView tvPhone = findViewById(R.id.tvPhone);
+        TextView tvHours = findViewById(R.id.tvHours);
+        TextView tvAddress = findViewById(R.id.tvAddress);
 
+        if (restaurant != null) {
+            tvName.setText(restaurant.name);
+            tvDescription.setText(restaurant.description);
+            tvPhone.setText(getString(R.string.label_phone, restaurant.phone));
+            tvHours.setText(getString(R.string.label_hours, restaurant.hours));
+            tvAddress.setText(getString(R.string.label_address, restaurant.address));
+        }
         setupBottomNavigation();
     }
 
