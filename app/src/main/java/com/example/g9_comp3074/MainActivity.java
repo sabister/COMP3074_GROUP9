@@ -30,11 +30,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        db = Room.databaseBuilder(getApplicationContext(),
-                        RestaurantDatabase.class, "restaurant_db")
-                .allowMainThreadQueries() // only for small/simple data; move to background for production
-                .build();
-
+        db = RestaurantDatabase.getInstance(this);
         setupNavigation();
         setupRestaurantCards();
     }
@@ -45,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Fetch all restaurants from DB
         List<Restaurant> restaurants = db.restaurantDao().getAllRestaurants();
+
+        android.util.Log.d("MainActivity", "Restaurants found: " + restaurants.size());
 
         // Attach adapter
         RestaurantCardAdapter adapter = new RestaurantCardAdapter(this, restaurants, db.restaurantDao());
@@ -69,6 +67,18 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(intent);
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshRestaurantList();
+    }
 
+    private void refreshRestaurantList() {
+        if (rvRestaurants != null && db != null) {
+            List<Restaurant> restaurants = db.restaurantDao().getAllRestaurants();
+            RestaurantCardAdapter adapter = new RestaurantCardAdapter(this, restaurants, db.restaurantDao());
+            rvRestaurants.setAdapter(adapter);
+        }
     }
 }

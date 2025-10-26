@@ -69,11 +69,8 @@ public class NewActivity extends AppCompatActivity implements OnMapReadyCallback
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        db = Room.databaseBuilder(getApplicationContext(),
-                        RestaurantDatabase.class, "restaurant_database")
-                .allowMainThreadQueries() // temporary for testing (not for production)
-                .build();
 
+        db = RestaurantDatabase.getInstance(getApplicationContext());
         restaurantDao = db.restaurantDao();
     }
 
@@ -165,6 +162,10 @@ public class NewActivity extends AppCompatActivity implements OnMapReadyCallback
             restaurantDao.insert(restaurant);
 
             Toast.makeText(this, "Entry for '" + name + "' created!", Toast.LENGTH_SHORT).show();
+            finish();
+
+            Intent intent = new Intent(NewActivity.this, MainActivity.class);
+            startActivity(intent);
             finish();
         });
 
