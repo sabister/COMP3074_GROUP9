@@ -59,12 +59,14 @@ public class MainActivity extends AppCompatActivity {
                 List<Restaurant> filteredList = new ArrayList<>();
 
                 for (Restaurant restaurant : allRestaurants) {
-                    if (restaurant.getName().toLowerCase().contains(s.toLowerCase())) {
+                    boolean matchesName = restaurant.name != null &&
+                            restaurant.name.toLowerCase().contains(s.toLowerCase());
+                    boolean matchesTags = restaurant.tags != null &&
+                            restaurant.tags.toLowerCase().contains(s.toLowerCase());
+                    if (matchesName || matchesTags) {
                         filteredList.add(restaurant);
                     }
-                    if (restaurant.getTags().toLowerCase().contains(s.toLowerCase())) {
-                        filteredList.add(restaurant);
-                    }
+
                 }
 
                 RestaurantCardAdapter adapter = new RestaurantCardAdapter(MainActivity.this, filteredList, db.restaurantDao());
