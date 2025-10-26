@@ -15,7 +15,7 @@ public class RestaurantCardAdapter extends RecyclerView.Adapter<RestaurantCardAd
 
     private List<Restaurant> restaurants;
     private Context context;
-    private RestaurantDao restaurantDao; // for delete/edit
+    private RestaurantDao restaurantDao;
 
     public RestaurantCardAdapter(Context context, List<Restaurant> restaurants, RestaurantDao restaurantDao) {
         this.context = context;

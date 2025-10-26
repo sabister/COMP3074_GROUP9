@@ -35,13 +35,11 @@ public class RestActivity extends AppCompatActivity {
         });
         int restaurantId = getIntent().getIntExtra("restaurantId", -1);
         if (restaurantId == -1) {
-            // Invalid ID, finish the activity
             finish();
             return;
         }
         RestaurantDatabase db = RestaurantDatabase.getInstance(this);
         Restaurant restaurant = db.restaurantDao().getRestaurantById(restaurantId);
-        // ✅ Populate your views
         TextView tvName = findViewById(R.id.tvName);
         TextView tvDescription = findViewById(R.id.tvDescription);
         TextView tvPhone = findViewById(R.id.tvPhone);

@@ -25,13 +25,15 @@
             android:background="@drawable/circle_background"
             android:scaleType="centerCrop" />
 
-        <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_weight="1"
-            android:queryHint="Search restaurants..." />
+            android:queryHint="Search restaurants..."
+            android:iconifiedByDefault="false"
+            android:background="#222222"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

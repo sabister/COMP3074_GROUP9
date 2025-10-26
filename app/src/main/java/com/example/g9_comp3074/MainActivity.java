@@ -1,8 +1,13 @@
 package com.example.g9_comp3074;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import androidx.appcompat.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +37,21 @@ public class MainActivity extends AppCompatActivity {
         db = RestaurantDatabase.getInstance(this);
         setupNavigation();
         setupRestaurantCards();
+
+        SearchView searchView = findViewById(R.id.searchView);
+        TextView searchText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        ImageView searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
+        ImageView closeIcon = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+
+        // --- Apply color styling ---
+        if (searchText != null) {
+            searchText.setTextColor(Color.WHITE);
+            searchText.setHintTextColor(Color.GRAY);
+        }
+        if (searchIcon != null) searchIcon.setColorFilter(Color.WHITE);
+        if (closeIcon != null) closeIcon.setColorFilter(Color.WHITE);
+
+        searchView.setBackgroundColor(Color.parseColor("#222222"));
     }
 
     private void setupRestaurantCards() {
@@ -81,4 +100,5 @@ public class MainActivity extends AppCompatActivity {
             rvRestaurants.setAdapter(adapter);
         }
     }
+
 }
