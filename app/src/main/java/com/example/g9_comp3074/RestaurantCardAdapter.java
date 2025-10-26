@@ -37,6 +37,7 @@ public class RestaurantCardAdapter extends RecyclerView.Adapter<RestaurantCardAd
 
         holder.tvTitle.setText(restaurant.name);
         holder.tvSubtitle.setText(restaurant.description);
+        holder.tvTags.setText(restaurant.tags);
 
         // Details button
         holder.btnDetails.setOnClickListener(v -> {
@@ -67,13 +68,14 @@ public class RestaurantCardAdapter extends RecyclerView.Adapter<RestaurantCardAd
     }
 
     static class RestaurantViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle, tvSubtitle;
+        TextView tvTitle, tvSubtitle,tvTags;
         Button btnDetails, btnEdit, btnDelete;
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvRestaurantTitle);
             tvSubtitle = itemView.findViewById(R.id.tvRestaurantSubtitle);
+            tvTags = itemView.findViewById(R.id.tvRestaurantTags);
             btnDetails = itemView.findViewById(R.id.btnDetails);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);

@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
                     if (restaurant.getName().toLowerCase().contains(s.toLowerCase())) {
                         filteredList.add(restaurant);
                     }
+                    if (restaurant.getTags().toLowerCase().contains(s.toLowerCase())) {
+                        filteredList.add(restaurant);
+                    }
                 }
 
                 RestaurantCardAdapter adapter = new RestaurantCardAdapter(MainActivity.this, filteredList, db.restaurantDao());
