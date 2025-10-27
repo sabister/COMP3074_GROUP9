@@ -2,7 +2,6 @@ package com.example.g9_comp3074;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +10,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -22,7 +22,6 @@ public class AboutActivity extends AppCompatActivity {
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         toolbar.setNavigationOnClickListener(v -> finish());
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
@@ -35,20 +34,31 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void setupBottomNavigation() {
-        Button searchButton = findViewById(R.id.btn_search);
-        Button collectionButton = findViewById(R.id.btn_col);
-        Button newEntryButton = findViewById(R.id.btn_new);
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        if (bottomNav == null) return;
 
-        searchButton.setOnClickListener(v -> finish());
+        // Highlight "About"
+        bottomNav.setSelectedItemId(R.id.nav_about);
 
-        collectionButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AboutActivity.this, CollectionActivity.class);
-            startActivity(intent);
-        });
-
-        newEntryButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AboutActivity.this, NewActivity.class);
-            startActivity(intent);
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_search) {
+                startActivity(new Intent(AboutActivity.this, MainActivity.class));
+                return true;
+            } else if (id == R.id.nav_collections) {
+                startActivity(new Intent(AboutActivity.this, CollectionActivity.class));
+                return true;
+            } else if (id == R.id.nav_new) {
+                startActivity(new Intent(AboutActivity.this, NewActivity.class));
+                return true;
+            } else if (id == R.id.nav_about) {
+                // Already here
+                return true;
+            } else if (id == R.id.nav_more) {
+                // TODO: open Settings/More when you add it
+                return true;
+            }
+            return false;
         });
     }
 }

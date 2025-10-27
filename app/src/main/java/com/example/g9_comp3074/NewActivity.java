@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.room.Room;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -60,10 +59,9 @@ public class NewActivity extends AppCompatActivity implements OnMapReadyCallback
         initializeViews();
         setupMap();
         setupClickListeners();
-        setupBottomNavigation();
+        setupBottomNavigation();  // <-- new version
         setupAddressAutoSearch();
 
-        // Handle insets (for EdgeToEdge layout)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -74,12 +72,10 @@ public class NewActivity extends AppCompatActivity implements OnMapReadyCallback
         restaurantDao = db.restaurantDao();
     }
 
-    // 🗺️ Initialize Google Map
+    // 🗺️ Map
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Default location: Toronto
         LatLng toronto = new LatLng(43.65107, -79.347015);
         mMap.addMarker(new MarkerOptions().position(toronto).title("Toronto"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(toronto, 12f));
@@ -108,30 +104,21 @@ public class NewActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void setupMap() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null) mapFragment.getMapAsync(this);
     }
 
     private void setupAddressAutoSearch() {
         etAddress.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                 handler.removeCallbacks(searchRunnable);
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+            @Override public void afterTextChanged(Editable s) {
                 searchRunnable = () -> {
                     String address = s.toString().trim();
-                    if (!address.isEmpty()) {
-                        showAddressOnMap(address);
-                    }
+                    if (!address.isEmpty()) showAddressOnMap(address);
                 };
                 handler.postDelayed(searchRunnable, 1500);
             }
@@ -152,63 +139,48 @@ public class NewActivity extends AppCompatActivity implements OnMapReadyCallback
                 return;
             }
 
-            // Convert tags list to a single comma-separated string for storage
             String tagsString = String.join(",", selectedTags);
-
-            // Create restaurant object
             Restaurant restaurant = new Restaurant(name, description, phone, hours, address, tagsString);
 
-            // Insert into database
             restaurantDao.insert(restaurant);
 
             Toast.makeText(this, "Entry for '" + name + "' created!", Toast.LENGTH_SHORT).show();
-            finish();
-
-            Intent intent = new Intent(NewActivity.this, MainActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(NewActivity.this, MainActivity.class));
             finish();
         });
 
         btnAddTag.setOnClickListener(v -> showAddTagDialog());
     }
 
-    // 📍 Show address on Google Map
     private void showAddressOnMap(String address) {
         if (mMap == null) return;
-
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
             List<Address> results = geocoder.getFromLocationName(address, 1);
             if (results != null && !results.isEmpty()) {
-                Address location = results.get(0);
-                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
+                Address loc = results.get(0);
+                LatLng latLng = new LatLng(loc.getLatitude(), loc.getLongitude());
                 mMap.clear();
                 mMap.addMarker(new MarkerOptions().position(latLng).title(address));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
             } else {
                 Toast.makeText(this, "Address not found", Toast.LENGTH_SHORT).show();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             Toast.makeText(this, "Unable to connect to location service", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // 🏷️ Show Add Tag Dialog
     private void showAddTagDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add a new tag");
-
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setHint("e.g., Vegan, Outdoor Seating");
         builder.setView(input);
-
         builder.setPositiveButton("Add", (dialog, which) -> {
             String newTagText = input.getText().toString().trim();
-            if (!newTagText.isEmpty()) {
-                addChipToGroup(newTagText);
-            }
+            if (!newTagText.isEmpty()) addChipToGroup(newTagText);
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         builder.show();
@@ -226,39 +198,42 @@ public class NewActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private List<String> getSelectedTags() {
         List<String> selectedTags = new ArrayList<>();
-        List<Integer> checkedChipIds = chipGroupTags.getCheckedChipIds();
-        for (Integer id : checkedChipIds) {
+        List<Integer> ids = chipGroupTags.getCheckedChipIds();
+        for (Integer id : ids) {
             Chip chip = chipGroupTags.findViewById(id);
-            if (chip != null) {
-                selectedTags.add(chip.getText().toString());
-            }
+            if (chip != null) selectedTags.add(chip.getText().toString());
         }
         return selectedTags;
     }
 
+    /** BottomNavigationView version */
     private void setupBottomNavigation() {
-        Button searchButton = findViewById(R.id.btn_search);
-        Button collectionButton = findViewById(R.id.btn_col);
-        Button newButton = findViewById(R.id.btn_new);
-        Button aboutButton = findViewById(R.id.btn_about);
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        if (bottomNav == null) return;
 
-        searchButton.setOnClickListener(v -> {
-            Intent intent = new Intent(NewActivity.this, MainActivity.class);
-            startActivity(intent);
-        });
+        // Mark "New" as selected for this screen
+        bottomNav.setSelectedItemId(R.id.nav_new);
 
-        collectionButton.setOnClickListener(v -> {
-            Intent intent = new Intent(NewActivity.this, CollectionActivity.class);
-            startActivity(intent);
-        });
-
-        newButton.setOnClickListener(v ->
-                Toast.makeText(this, "You are already on the New Entry screen", Toast.LENGTH_SHORT).show()
-        );
-
-        aboutButton.setOnClickListener(v -> {
-            Intent intent = new Intent(NewActivity.this, AboutActivity.class);
-            startActivity(intent);
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_search) {
+                startActivity(new Intent(NewActivity.this, MainActivity.class));
+                return true;
+            } else if (id == R.id.nav_collections) {
+                startActivity(new Intent(NewActivity.this, CollectionActivity.class));
+                return true;
+            } else if (id == R.id.nav_new) {
+                // Already here
+                Toast.makeText(this, "Already on New Entry", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if (id == R.id.nav_about) {
+                startActivity(new Intent(NewActivity.this, AboutActivity.class));
+                return true;
+            } else if (id == R.id.nav_more) {
+                // TODO: open Settings/More
+                return true;
+            }
+            return false;
         });
     }
 }

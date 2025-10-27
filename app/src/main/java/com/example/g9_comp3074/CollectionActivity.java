@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,15 +58,22 @@ public class CollectionActivity extends AppCompatActivity {
         // Inflate one card per item
         populateCards(titles);
 
+        // “New Collection +” button
+        Button addBtn = findViewById(R.id.button5);
+        addBtn.setOnClickListener(v -> {
+            // TODO: launch your create-new-collection flow
+            startActivity(new Intent(CollectionActivity.this, NewActivity.class));
+        });
+
+        // Bottom nav
         setupBottomNavigation();
     }
 
     private void populateCards(List<String> titles) {
         cardContainer.removeAllViews();
         for (String title : titles) {
-            // Inflate the reusable component without attaching yet
             View card = getLayoutInflater().inflate(
-                    R.layout.restaurant_card_component,  // <<— updated layout name
+                    R.layout.restaurant_card_component, // or R.layout.collection_component if you switch the design
                     cardContainer,
                     false
             );
@@ -77,7 +85,7 @@ public class CollectionActivity extends AppCompatActivity {
             Button btnDelete    = card.findViewById(R.id.btnDelete);
 
             tvTitle.setText(title);
-            tvSubtitle.setText("…"); // set something meaningful if you have it
+            tvSubtitle.setText("…");
 
             btnDetails.setOnClickListener(v -> {
                 Intent intent = new Intent(CollectionActivity.this, InsideCollectionActivity.class);
@@ -98,22 +106,32 @@ public class CollectionActivity extends AppCompatActivity {
         }
     }
 
-
     private void setupBottomNavigation() {
-        Button searchButton = findViewById(R.id.btn_search);
-        Button newEntryButton = findViewById(R.id.btn_new);
-        Button aboutButton = findViewById(R.id.btn_about);
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        if (bottomNav == null) return;
 
-        searchButton.setOnClickListener(v -> finish());
+        // Highlight this tab
+        bottomNav.setSelectedItemId(R.id.nav_collections);
 
-        newEntryButton.setOnClickListener(v -> {
-            Intent intent = new Intent(CollectionActivity.this, NewActivity.class);
-            startActivity(intent);
-        });
-
-        aboutButton.setOnClickListener(v -> {
-            Intent intent = new Intent(CollectionActivity.this, AboutActivity.class);
-            startActivity(intent);
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_search) {
+                startActivity(new Intent(CollectionActivity.this, MainActivity.class));
+                return true;
+            } else if (id == R.id.nav_collections) {
+                // already here
+                return true;
+            } else if (id == R.id.nav_new) {
+                startActivity(new Intent(CollectionActivity.this, NewActivity.class));
+                return true;
+            } else if (id == R.id.nav_about) {
+                startActivity(new Intent(CollectionActivity.this, AboutActivity.class));
+                return true;
+            } else if (id == R.id.nav_more) {
+                // TODO: open Settings/More when ready
+                return true;
+            }
+            return false;
         });
     }
 }

@@ -118,24 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
             // Optionally highlight current tab
             bottomNav.setSelectedItemId(R.id.nav_search);
-        } else {
-            // Fallback for old layout with buttons (defensive; safe to remove later)
-            Button newEntryButton = findViewById(R.id.btn_new);
-            Button collectionButton = findViewById(R.id.btn_col);
-            Button aboutButton = findViewById(R.id.btn_about);
-
-            if (newEntryButton != null) {
-                newEntryButton.setOnClickListener(v ->
-                        startActivity(new Intent(MainActivity.this, NewActivity.class)));
-            }
-            if (collectionButton != null) {
-                collectionButton.setOnClickListener(v ->
-                        startActivity(new Intent(MainActivity.this, CollectionActivity.class)));
-            }
-            if (aboutButton != null) {
-                aboutButton.setOnClickListener(v ->
-                        startActivity(new Intent(MainActivity.this, AboutActivity.class)));
-            }
         }
     }
 

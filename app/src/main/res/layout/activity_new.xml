@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#000000"
+    android:background="@color/colorBackground"
     tools:context=".NewActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorSurface"
+        android:background="@color/colorSurface"
         app:title="New Entry"
-        app:navigationIcon="@drawable/abc_ic_ab_back_material" />
+        app:titleCentered="true"
+        app:titleTextColor="@color/colorOnPrimary"
+        app:navigationIcon="@drawable/abc_ic_ab_back_material"
+        app:navigationIconTint="@color/colorOnPrimary" />
 
+    <!-- Name -->
     <EditText
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="#FFFFFF"
-        android:hint="Restaurant Name"
         android:layout_marginTop="16dp"
-        android:textColor="#000000"
+        android:background="@color/white"
+        android:gravity="center"
+        android:hint="Restaurant Name"
+        android:textColor="@color/black"
         android:textSize="20sp" />
 
     <ScrollView
@@ -46,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Description:"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/colorOnBackground"
                 android:textSize="15sp" />
 
             <EditText
@@ -66,8 +71,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
-            <!-- TODO: if possible, make the surrounding border black-->
             <EditText
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
@@ -86,7 +89,6 @@
                 android:layout_margin="10sp"
                 android:background="@color/white"
                 android:hint="Operation Hours"
-
                 android:textAlignment="center"
                 android:textColor="@color/black" />
 
@@ -98,37 +100,31 @@
                 android:background="@color/white"
                 android:hint="Address"
                 android:inputType="textPostalAddress"
-
                 android:textAlignment="center"
                 android:textColor="@color/black" />
 
-
-            <!--TODO: HOW DOES TAGS WORK-->
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/tag_chip_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:singleLine="false">
+                app:singleLine="false" />
 
-            </com.google.android.material.chip.ChipGroup>
             <Button
                 android:id="@+id/btn_add_tag"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+ Add New Tag"
-                android:layout_gravity="start"/>
+                android:layout_gravity="start"
+                android:text="+ Add New Tag" />
 
-            <!-- This container will hold the Google Map fragment -->
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"/>
-
+                android:layout_marginBottom="16dp" />
 
             <Button
                 android:id="@+id/btn_create"
@@ -136,74 +132,18 @@
                 android:layout_height="wrap_content"
                 android:text="Create Entry" />
 
-
         </LinearLayout>
     </ScrollView>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Bottom Navigation (replaces old Button row) -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#111111"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:background="@color/colorSurface"
+        app:itemIconTint="@color/nav_icon_selector"
+        app:itemTextColor="@color/nav_text_selector"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
 
-        <Button
-            android:id="@+id/btn_search"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_search"
-            android:textSize="10sp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_col"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <Button
-            android:id="@+id/btn_col"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_col"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/btn_search"
-            app:layout_constraintEnd_toStartOf="@+id/btn_new"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <Button
-            android:id="@+id/btn_new"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_new"
-            android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/btn_col"
-            app:layout_constraintEnd_toStartOf="@+id/btn_about"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <Button
-            android:id="@+id/btn_about"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_about"
-            android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/btn_new"
-            app:layout_constraintEnd_toStartOf="@+id/btn_more"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <Button
-            android:id="@+id/btn_more"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_more"
-            android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/btn_about"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

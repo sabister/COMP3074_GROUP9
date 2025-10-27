@@ -2,7 +2,6 @@ package com.example.g9_comp3074;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -12,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class RestActivity extends AppCompatActivity {
 
@@ -33,6 +33,8 @@ public class RestActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Get selected restaurant
         int restaurantId = getIntent().getIntExtra("restaurantId", -1);
         if (restaurantId == -1) {
             finish();
@@ -40,6 +42,7 @@ public class RestActivity extends AppCompatActivity {
         }
         RestaurantDatabase db = RestaurantDatabase.getInstance(this);
         Restaurant restaurant = db.restaurantDao().getRestaurantById(restaurantId);
+
         TextView tvName = findViewById(R.id.tvName);
         TextView tvDescription = findViewById(R.id.tvDescription);
         TextView tvPhone = findViewById(R.id.tvPhone);
@@ -55,30 +58,37 @@ public class RestActivity extends AppCompatActivity {
             tvAddress.setText(getString(R.string.label_address, restaurant.address));
             tvTags.setText(getString(R.string.label_tags, restaurant.tags));
         }
+
         setupBottomNavigation();
     }
 
     private void setupBottomNavigation() {
-        Button searchButton = findViewById(R.id.btn_search);
-        Button collectionButton = findViewById(R.id.btn_col);
-        Button aboutButton = findViewById(R.id.btn_about);
-        Button newEntryButton = findViewById(R.id.btn_new);
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        if (bottomNav == null) return;
 
-        searchButton.setOnClickListener(v -> finish());
+        // Highlight the correct tab for this screen if you want (e.g., none or Search)
+        bottomNav.setSelectedItemId(R.id.nav_search); // choose what makes sense for details
 
-        collectionButton.setOnClickListener(v -> {
-            Intent intent = new Intent(RestActivity.this, CollectionActivity.class);
-            startActivity(intent);
-        });
-
-        aboutButton.setOnClickListener(v -> {
-            Intent intent = new Intent(RestActivity.this, AboutActivity.class);
-            startActivity(intent);
-        });
-
-        newEntryButton.setOnClickListener(v -> {
-            Intent intent = new Intent(RestActivity.this, NewActivity.class);
-            startActivity(intent);
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_search) {
+                // Back to main list
+                startActivity(new Intent(RestActivity.this, MainActivity.class));
+                return true;
+            } else if (id == R.id.nav_collections) {
+                startActivity(new Intent(RestActivity.this, CollectionActivity.class));
+                return true;
+            } else if (id == R.id.nav_new) {
+                startActivity(new Intent(RestActivity.this, NewActivity.class));
+                return true;
+            } else if (id == R.id.nav_about) {
+                startActivity(new Intent(RestActivity.this, AboutActivity.class));
+                return true;
+            } else if (id == R.id.nav_more) {
+                // TODO: add a Settings/More screen
+                return true;
+            }
+            return false;
         });
     }
 }
