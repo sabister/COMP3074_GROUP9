@@ -43,6 +43,18 @@ public class MainActivity extends AppCompatActivity {
         setupNavigation();
         setupRestaurantCards();
 
+        SearchView searchView = findViewById(R.id.searchView);
+        TextView searchText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        ImageView searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
+        ImageView closeIcon = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+
+        // --- Apply color styling ---
+        if (searchText != null) {
+            searchText.setTextColor(Color.WHITE);
+            searchText.setHintTextColor(Color.GRAY);
+        }
+        if (searchIcon != null) searchIcon.setColorFilter(Color.WHITE);
+        if (closeIcon != null) closeIcon.setColorFilter(Color.WHITE);
     }
     //search bar
     private void initSearch(){

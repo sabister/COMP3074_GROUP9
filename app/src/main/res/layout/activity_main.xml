@@ -58,6 +58,7 @@
                 android:layout_height="44dp"
                 android:queryHint="@string/search_hint"
                 android:iconifiedByDefault="false"
+                android:textColor="@color/white"
                 android:background="@android:color/transparent"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp" />
