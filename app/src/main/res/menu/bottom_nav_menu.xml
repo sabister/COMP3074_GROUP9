@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/nav_search" android:icon="@drawable/ic_logo" android:title="Search"/>
-    <item android:id="@+id/nav_collections" android:icon="@drawable/ic_collections" android:title="Collections"/>
-    <item android:id="@+id/nav_new_entry" android:icon="@drawable/ic_add" android:title="New Entry"/>
-    <item android:id="@+id/nav_about" android:icon="@drawable/ic_info" android:title="About"/>
-    <item android:id="@+id/nav_more" android:icon="@drawable/ic_more" android:title="More"/>
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/ic_add"
+        android:title="@string/btn_search" />
+    <item
+        android:id="@+id/nav_collections"
+        android:icon="@drawable/ic_collections"
+        android:title="@string/btn_col" />
+    <item
+        android:id="@+id/nav_new"
+        android:icon="@drawable/ic_add"
+        android:title="@string/btn_new" />
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/ic_info"
+        android:title="@string/btn_about" />
+    <item
+        android:id="@+id/nav_more"
+        android:icon="@drawable/ic_more"
+        android:title="@string/btn_more" />
 </menu>

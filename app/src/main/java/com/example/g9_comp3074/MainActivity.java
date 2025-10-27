@@ -91,25 +91,54 @@ public class MainActivity extends AppCompatActivity {
         rvRestaurants.setAdapter(adapter);
     }
     private void setupNavigation() {
-        Button newEntryButton = findViewById(R.id.btn_new);
-        Button collectionButton = findViewById(R.id.btn_col);
-        Button aboutButton = findViewById(R.id.btn_about);
+        com.google.android.material.bottomnavigation.BottomNavigationView bottomNav =
+                findViewById(R.id.bottomNavigation);
 
-        newEntryButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, NewActivity.class);
-            startActivity(intent);
-        });
+        if (bottomNav != null) {
+            bottomNav.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_search) {
+                    // already on MainActivity
+                    return true;
+                } else if (id == R.id.nav_collections) {
+                    startActivity(new Intent(MainActivity.this, CollectionActivity.class));
+                    return true;
+                } else if (id == R.id.nav_new) {
+                    startActivity(new Intent(MainActivity.this, NewActivity.class));
+                    return true;
+                } else if (id == R.id.nav_about) {
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                    return true;
+                } else if (id == R.id.nav_more) {
+                    // TODO: open a More/Settings screen when you add it
+                    return true;
+                }
+                return false;
+            });
 
-        collectionButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, CollectionActivity.class);
-            startActivity(intent);
-        });
+            // Optionally highlight current tab
+            bottomNav.setSelectedItemId(R.id.nav_search);
+        } else {
+            // Fallback for old layout with buttons (defensive; safe to remove later)
+            Button newEntryButton = findViewById(R.id.btn_new);
+            Button collectionButton = findViewById(R.id.btn_col);
+            Button aboutButton = findViewById(R.id.btn_about);
 
-        aboutButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-            startActivity(intent);
-        });
+            if (newEntryButton != null) {
+                newEntryButton.setOnClickListener(v ->
+                        startActivity(new Intent(MainActivity.this, NewActivity.class)));
+            }
+            if (collectionButton != null) {
+                collectionButton.setOnClickListener(v ->
+                        startActivity(new Intent(MainActivity.this, CollectionActivity.class)));
+            }
+            if (aboutButton != null) {
+                aboutButton.setOnClickListener(v ->
+                        startActivity(new Intent(MainActivity.this, AboutActivity.class)));
+            }
+        }
     }
+
     @Override
     protected void onResume() {
         super.onResume();

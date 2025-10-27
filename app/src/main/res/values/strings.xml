@@ -9,4 +9,5 @@
     <string name="label_hours">Hours: %1$s</string>
     <string name="label_address">Address: %1$s</string>
     <string name="label_tags">Tags: %1$s</string>
+    <string name="search_hint">Restaurant name...</string>
 </resources>

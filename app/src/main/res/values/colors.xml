@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-</resources>
+    <resources>
+
+        <color name="black">#000000</color>
+        <color name="white">#FFFFFF</color>
+        <!-- Core -->
+        <color name="colorPrimary">#D84315</color>          <!-- Deep Orange 800 -->
+        <color name="colorPrimaryVariant">#BF360C</color>   <!-- Darker variant -->
+        <color name="colorSecondary">#FFB300</color>        <!-- Amber 600 -->
+        <color name="colorSecondaryVariant">#FFA000</color> <!-- Slightly deeper amber -->
+
+        <!-- Backgrounds & Surfaces -->
+        <color name="colorBackground">#121212</color>       <!-- Dark Mode Background -->
+        <color name="colorSurface">#1E1E1E</color>          <!-- Cards / Toolbars -->
+        <color name="colorCard">#242424</color>             <!-- Elevated surface -->
+        <color name="colorOverlay">#333333</color>          <!-- Borders, strokes -->
+
+        <!-- ✏Text Colors -->
+        <color name="colorOnPrimary">#FFFFFF</color>        <!-- Text on buttons/cards -->
+        <color name="colorOnBackground">#FFFFFF</color>     <!-- Main text -->
+        <color name="colorOnSurface">#B0B0B0</color>        <!-- Secondary text -->
+        <color name="colorHint">#9E9E9E</color>             <!-- Hints/placeholders -->
+
+        <!-- Feedback Colors -->
+        <color name="colorError">#CF6679</color>            <!-- Delete/Error -->
+        <color name="colorSuccess">#81C784</color>          <!-- Confirm/Success -->
+        <color name="colorWarning">#FF9800</color>          <!-- Alerts -->
+        <color name="colorInfo">#64B5F6</color>             <!-- Info accent -->
+
+        <!-- Navigation -->
+        <color name="colorNavBackground">#1E1E1E</color>
+        <color name="colorNavItemActive">#FFB300</color>
+        <color name="colorNavItemInactive">#9E9E9E</color>
+
+        <!-- Misc -->
+        <color name="dividerColor">#2C2C2C</color>
+        <color name="chipBackground">#2A2A2A</color>
+        <color name="chipTextColor">#FFB300</color>
+
+    </resources>
