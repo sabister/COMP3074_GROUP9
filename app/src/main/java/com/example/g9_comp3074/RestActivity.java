@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.IOException; // Import IOException
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,8 +34,6 @@ public class RestActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest);
-
-        // --- Toolbar Setup ---
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -43,15 +41,12 @@ public class RestActivity extends AppCompatActivity implements OnMapReadyCallbac
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         toolbar.setNavigationOnClickListener(v -> finish());
-
-        // --- Window Insets for Edge-to-Edge ---
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // --- Initialize Views ---
         TextView tvName = findViewById(R.id.tvName);
         TextView tvDescription = findViewById(R.id.tvDescription);
         TextView tvPhone = findViewById(R.id.tvPhone);
@@ -59,7 +54,6 @@ public class RestActivity extends AppCompatActivity implements OnMapReadyCallbac
         TextView tvAddress = findViewById(R.id.tvAddress);
         TextView tvTags = findViewById(R.id.tvTags);
 
-        // --- Load Restaurant Data ---
         int restaurantId = getIntent().getIntExtra("restaurantId", -1);
         if (restaurantId == -1) {
             Toast.makeText(this, "Restaurant not found.", Toast.LENGTH_SHORT).show();
@@ -77,20 +71,15 @@ public class RestActivity extends AppCompatActivity implements OnMapReadyCallbac
             tvHours.setText(restaurant.hours);
             tvTags.setText(restaurant.tags);
 
-            // Store the address and set the text
             restaurantAddress = restaurant.address;
             tvAddress.setText(restaurantAddress);
         }
 
-        // --- Map Initialization ---
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
-            // The map will be configured in the onMapReady callback
             mapFragment.getMapAsync(this);
         }
-
-        // --- Bottom Navigation ---
         setupBottomNavigation();
     }
 
@@ -100,11 +89,9 @@ public class RestActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
 
-        // Once the map is ready, check if we have an address to show
         if (restaurantAddress != null && !restaurantAddress.isEmpty()) {
             showAddressOnMap(restaurantAddress);
         } else {
-            // If no address, fall back to a default location like Toronto
             LatLng toronto = new LatLng(43.65107, -79.347015);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(toronto, 12f));
         }
@@ -115,12 +102,9 @@ public class RestActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (mMap == null || address == null || address.isEmpty()) {
             return;
         }
-
-        // --- Perform Geocoding on a Background Thread ---
         new Thread(() -> {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             try {
-                // This is the blocking call that must be off the main thread
                 List<Address> results = geocoder.getFromLocationName(address, 1);
 
                 if (results != null && !results.isEmpty()) {
@@ -137,13 +121,11 @@ public class RestActivity extends AppCompatActivity implements OnMapReadyCallbac
                     });
 
                 } else {
-                    // Show feedback on the main thread
                     runOnUiThread(() ->
                             Toast.makeText(this, "Address not found on map", Toast.LENGTH_SHORT).show()
                     );
                 }
             } catch (IOException e) {
-                // Handle exceptions (e.g., network unavailable) on the main thread
                 runOnUiThread(() ->
                         Toast.makeText(this, "Location service unavailable", Toast.LENGTH_SHORT).show()
                 );
@@ -155,14 +137,12 @@ public class RestActivity extends AppCompatActivity implements OnMapReadyCallbac
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
         if (bottomNav == null) return;
 
-        // Set the current item as selected to give user feedback
         bottomNav.setSelectedItemId(R.id.nav_search);
 
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
 
             if (id == R.id.nav_search) {
-                // Already on a details page linked from search, maybe go to MainActivity
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
             } else if (id == R.id.nav_collections) {
@@ -175,7 +155,6 @@ public class RestActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(new Intent(this, AboutActivity.class));
                 return true;
             }
-
             return false;
         });
     }

@@ -48,7 +48,7 @@ public class RestaurantCardAdapter extends RecyclerView.Adapter<RestaurantCardAd
 
         // Edit button
         holder.btnEdit.setOnClickListener(v -> {
-            Intent intent = new Intent(context, NewActivity.class);
+            Intent intent = new Intent(context, EditCardComponent.class);
             intent.putExtra("restaurantId", restaurant.id);
             context.startActivity(intent);
         });
