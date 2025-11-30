@@ -1,81 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/restaurantCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    android:background="@drawable/card_background"
-    android:padding="16dp">
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/colorSurface"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    app:strokeColor="@color/dividerColor"
+    app:strokeWidth="1dp">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/tvRestaurantTitle"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Restaurant Title"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnDetails"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="16dp">
 
-    <!-- Optional subtitle/description -->
-    <TextView
-        android:id="@+id/tvRestaurantSubtitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Short description..."
-        android:textColor="#DDDDDD"
-        android:textSize="14sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/tvRestaurantTitle"
-        app:layout_constraintEnd_toEndOf="@+id/tvRestaurantTitle"
-        app:layout_constraintTop_toBottomOf="@+id/tvRestaurantTitle" />
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvRestaurantTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Restaurant Title"
+            android:textColor="@color/colorOnBackground"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnDetails"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Details -->
-    <Button
-        android:id="@+id/btnDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Details"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/tvRestaurantSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Short description..."
+            android:textColor="@color/colorOnSurface"
+            android:textSize="14sp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="@+id/tvRestaurantTitle"
+            app:layout_constraintEnd_toEndOf="@+id/tvRestaurantTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvRestaurantTitle" />
 
-    <!-- Edit -->
-    <Button
-        android:id="@+id/btnEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/btnDetails"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <!-- Tags -->
+        <TextView
+            android:id="@+id/tvRestaurantTags"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Tags: sushi • takeout • $$"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="13sp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="@+id/tvRestaurantSubtitle"
+            app:layout_constraintEnd_toEndOf="@+id/tvRestaurantSubtitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvRestaurantSubtitle" />
 
-    <!-- Delete -->
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/btnEdit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <!-- Primary action -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:minHeight="40dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Details"
+            android:textAllCaps="false"
+            android:textColor="@color/colorOnPrimary"
+            app:cornerRadius="12dp"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/tvRestaurantTags"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Tags:"
-        android:textColor="#DDDDDD"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvRestaurantSubtitle"
-        app:layout_constraintStart_toStartOf="@+id/tvRestaurantSubtitle"
-        app:layout_constraintTop_toBottomOf="@+id/tvRestaurantSubtitle" />
+        <!-- Secondary action (outlined) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:minHeight="40dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Edit"
+            android:textAllCaps="false"
+            android:textColor="@color/colorSecondary"
+            app:cornerRadius="12dp"
+            app:strokeColor="@color/colorSecondary"
+            app:strokeWidth="1dp"
+            app:backgroundTint="@android:color/transparent"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/btnDetails"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Destructive action -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:minHeight="40dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Delete"
+            android:textAllCaps="false"
+            android:textColor="@color/colorError"
+            app:cornerRadius="12dp"
+            app:backgroundTint="@android:color/transparent"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/btnEdit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,7 +1,11 @@
 package com.example.g9_comp3074;
 
 import android.content.Intent;
-import android.os.Bundle;import android.util.Log;
+import android.os.Bundle;
+import android.util.Log;
+import android.graphics.Color;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -13,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
     private RestaurantDatabase db;
@@ -24,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // EdgeToEdge.enable(this); // Consider disabling if it causes issues with padding
         setContentView(R.layout.activity_main);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -33,12 +36,26 @@ public class MainActivity extends AppCompatActivity {
         });
 
         db = RestaurantDatabase.getInstance(this);
-        rvRestaurants = findViewById(R.id.rvRestaurants); // Initialize rvRestaurants here
+        rvRestaurants = findViewById(R.id.rvRestaurants);
         rvRestaurants.setLayoutManager(new LinearLayoutManager(this));
 
         initSearch();
         setupNavigation();
-        // The initial data load is now handled in onResume, which is called after onCreate
+
+        // ---- KEEP search styling from main branch ----
+        SearchView searchView = findViewById(R.id.searchView);
+        TextView searchText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        ImageView searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
+        ImageView closeIcon = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+
+        if (searchText != null) {
+            searchText.setTextColor(Color.WHITE);
+            searchText.setHintTextColor(Color.GRAY);
+        }
+        if (searchIcon != null) searchIcon.setColorFilter(Color.WHITE);
+        if (closeIcon != null) closeIcon.setColorFilter(Color.WHITE);
+
+        // The initial data loading now happens in onResume
     }
 
     /**
@@ -55,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // FIX: Filter the cached list instead of hitting the database repeatedly.
                 String searchText = newText.toLowerCase();
                 List<Restaurant> filteredList = new ArrayList<>();
 
@@ -69,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         filteredList.add(restaurant);
                     }
                 }
-                // Update the adapter with the filtered list
+
                 if (adapter != null) {
                     adapter.filterList(filteredList);
                 }
@@ -82,13 +98,10 @@ public class MainActivity extends AppCompatActivity {
      * Sets up the RecyclerView by fetching data from the DB on a background thread.
      */
     private void setupRestaurantCards() {
-        // Run database query on a background thread to prevent ANR
         new Thread(() -> {
-            // This runs in the background
-            allRestaurants = db.restaurantDao().getAllRestaurants(); // Update the cached list
+            allRestaurants = db.restaurantDao().getAllRestaurants(); // Update cached list
             Log.d("MainActivity", "Restaurants found: " + allRestaurants.size());
 
-            // Switch back to the main thread to update the UI
             runOnUiThread(() -> {
                 adapter = new RestaurantCardAdapter(MainActivity.this, allRestaurants, db.restaurantDao());
                 rvRestaurants.setAdapter(adapter);
@@ -101,13 +114,12 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.bottomNavigation);
 
         if (bottomNav != null) {
-            // Set the current item as selected before adding the listener
             bottomNav.setSelectedItemId(R.id.nav_search);
 
             bottomNav.setOnItemSelectedListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.nav_search) {
-                    return true; // Already here
+                    return true;
                 } else if (id == R.id.nav_collections) {
                     startActivity(new Intent(MainActivity.this, CollectionActivity.class));
                     return true;
@@ -124,16 +136,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * onResume is called every time the user returns to this activity.
-     * It's the best place to refresh the data.
+     * Called every time the user returns to this activity.
+     * Best place to refresh restaurant data.
      */
     @Override
     protected void onResume() {
         super.onResume();
-        // Refresh the restaurant list from the database
-        setupRestaurantCards();
+        setupRestaurantCards(); // Refresh list
     }
-
-    // This method is no longer needed as its logic is now inside setupRestaurantCards
-    // private void refreshRestaurantList() { ... }
 }
