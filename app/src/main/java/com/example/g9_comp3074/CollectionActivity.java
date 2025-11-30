@@ -2,136 +2,107 @@ package com.example.g9_comp3074;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.appbar.MaterialToolbar;
+import com.example.g9_comp3074.collection_data.Collection;
+import com.example.g9_comp3074.collection_data.CollectionCardAdapter;
+import com.example.g9_comp3074.collection_data.CollectionDao;
+import com.example.g9_comp3074.collection_data.CollectionDatabase; // Assuming this is your Room DB class
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class CollectionActivity extends AppCompatActivity {
 
-    private LinearLayout cardContainer;
+    private RecyclerView rvCollections;
+    private CollectionCardAdapter adapter;
+    private CollectionDao collectionDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_collection);
 
-        // Toolbar
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(v -> finish());
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("My Collection");
-        }
+        // Initialize the database and DAO
+        // Make sure your database class is named CollectionDatabase and has a getInstance method
+        collectionDao = CollectionDatabase.getInstance(getApplicationContext()).collectionDao();
 
-        // Edge-to-edge
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        // Setup the "New Collection" button
+        Button btnNewCollection = findViewById(R.id.btnNewCollection);
+        btnNewCollection.setOnClickListener(v -> {
+            Intent intent = new Intent(CollectionActivity.this, NewCollection.class);
+            startActivity(intent);
         });
 
-        // Container for dynamic cards
-        cardContainer = findViewById(R.id.cardContainer);
+        // Setup the list of collection cards, mimicking MainActivity
+        setupCollectionList();
 
-        // Example data (replace with your real list)
-        List<String> titles = Arrays.asList(
-                "Restaurant I want to try",
-                "Spicy ramen spots",
-                "Top pizza places",
-                "Brunch shortlist"
-        );
-
-        // Inflate one card per item
-        populateCards(titles);
-
-        // “New Collection +” button
-        Button addBtn = findViewById(R.id.button5);
-        addBtn.setOnClickListener(v -> {
-            // TODO: launch your create-new-collection flow
-            startActivity(new Intent(CollectionActivity.this, NewActivity.class));
-        });
-
-        // Bottom nav
-        setupBottomNavigation();
+        // Setup bottom navigation
+        setupNavigation();
     }
 
-    private void populateCards(List<String> titles) {
-        cardContainer.removeAllViews();
-        for (String title : titles) {
-            View card = getLayoutInflater().inflate(
-                    R.layout.restaurant_card_component, // or R.layout.collection_component if you switch the design
-                    cardContainer,
-                    false
-            );
-
-            TextView tvTitle    = card.findViewById(R.id.tvRestaurantTitle);
-            TextView tvSubtitle = card.findViewById(R.id.tvRestaurantSubtitle);
-            Button btnDetails   = card.findViewById(R.id.btnDetails);
-            Button btnEdit      = card.findViewById(R.id.btnEdit);
-            Button btnDelete    = card.findViewById(R.id.btnDelete);
-
-            tvTitle.setText(title);
-            tvSubtitle.setText("…");
-
-            btnDetails.setOnClickListener(v -> {
-                Intent intent = new Intent(CollectionActivity.this, InsideCollectionActivity.class);
-                intent.putExtra("collection_title", title);
-                startActivity(intent);
-            });
-
-            btnEdit.setOnClickListener(v ->
-                    android.widget.Toast.makeText(this, "Edit: " + title, android.widget.Toast.LENGTH_SHORT).show()
-            );
-
-            btnDelete.setOnClickListener(v -> {
-                cardContainer.removeView(card);
-                android.widget.Toast.makeText(this, "Deleted: " + title, android.widget.Toast.LENGTH_SHORT).show();
-            });
-
-            cardContainer.addView(card);
-        }
+    /**
+     * This method is called whenever the user returns to this activity.
+     * It's the perfect place to refresh the list to show any new data.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh the list to show any newly added collections
+        setupCollectionList();
     }
 
-    private void setupBottomNavigation() {
+    /**
+     * This method mimics the setupRestaurantCards() from your MainActivity.
+     * It initializes the RecyclerView, fetches data from the database on a background thread,
+     * and then sets the adapter on the main UI thread.
+     */
+    private void setupCollectionList() {
+        rvCollections = findViewById(R.id.rvCollections); // This ID must be in your activity_collection.xml
+        rvCollections.setLayoutManager(new LinearLayoutManager(this));
+
+        // Run the database query on a background thread to avoid blocking the UI
+        new Thread(() -> {
+            // Fetch all collections from the database
+            List<Collection> collections = collectionDao.getAllCollections();
+            Log.d("CollectionActivity", "Collections found: " + collections.size());
+
+            // Switch back to the main thread to update the RecyclerView
+            runOnUiThread(() -> {
+                // Create and set the adapter
+                adapter = new CollectionCardAdapter(this, collections, collectionDao);
+                rvCollections.setAdapter(adapter);
+            });
+        }).start();
+    }
+
+    private void setupNavigation() {
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
-        if (bottomNav == null) return;
+        if (bottomNav != null) {
+            // Set the current item as selected
+            bottomNav.setSelectedItemId(R.id.nav_collections);
 
-        // Highlight this tab
-        bottomNav.setSelectedItemId(R.id.nav_collections);
+            bottomNav.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_search) {
+                    startActivity(new Intent(CollectionActivity.this, MainActivity.class));
+                    finish(); // Optional: finish current activity to prevent back stack buildup
+                    return true;
+                } else if (id == R.id.nav_collections) {
+                    // Already here, do nothing
+                    return true;
+                }
+                // Add other navigation cases if needed
+                // else if (id == R.id.nav_new) { ... }
 
-        bottomNav.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.nav_search) {
-                startActivity(new Intent(CollectionActivity.this, MainActivity.class));
-                return true;
-            } else if (id == R.id.nav_collections) {
-                // already here
-                return true;
-            } else if (id == R.id.nav_new) {
-                startActivity(new Intent(CollectionActivity.this, NewActivity.class));
-                return true;
-            } else if (id == R.id.nav_about) {
-                startActivity(new Intent(CollectionActivity.this, AboutActivity.class));
-                return true;
-            } else if (id == R.id.nav_more) {
-                // TODO: open Settings/More when ready
-                return true;
-            }
-            return false;
-        });
+                return false;
+            });
+        }
     }
 }

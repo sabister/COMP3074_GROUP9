@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.G9_comp3074">
         <activity
+            android:name=".NewCollection"
+            android:exported="false" />
+        <activity
+            android:name=".AddToCollection"
+            android:exported="false" />
+        <activity
             android:name=".EditCardComponent"
             android:exported="false" />
         <activity
