@@ -18,7 +18,7 @@
             android:name=".EditCollectionActivity"
             android:exported="false" />
         <activity
-            android:name=".EditCardComponent"
+            android:name=".EditCardActivity"
             android:exported="false" />
         <activity
             android:name=".AboutActivity"

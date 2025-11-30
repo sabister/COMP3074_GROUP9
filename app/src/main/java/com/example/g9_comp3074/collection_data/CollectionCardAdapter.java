@@ -12,11 +12,9 @@ import android.widget.Toast; // Import Toast for user feedback
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.g9_comp3074.EditCardComponent;
 import com.example.g9_comp3074.EditCollectionActivity;
 import com.example.g9_comp3074.InsideCollectionActivity;
 import com.example.g9_comp3074.R;
-import com.example.g9_comp3074.RestActivity;
 
 import java.util.List;
 
@@ -91,8 +89,8 @@ public class CollectionCardAdapter extends RecyclerView.Adapter<CollectionCardAd
             super(itemView);
             // Ensure these IDs match your collection_component.xml
             colTitle = itemView.findViewById(R.id.btnColTitle);
-            colSubtitle = itemView.findViewById(R.id.btnColSubtitle);
             btnDetails = itemView.findViewById(R.id.btnColDetail);
+            colSubtitle = itemView.findViewById(R.id.btnColSubtitle);
             btnEdit = itemView.findViewById(R.id.btnColEdit);
             btnDelete = itemView.findViewById(R.id.btnColDelete);
         }

@@ -108,4 +108,4 @@ public class CollectionActivity extends AppCompatActivity {
             });
         }
     }
-}git
+}

@@ -14,7 +14,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.g9_comp3074.join.CollectionRestaurantJoin;
 import com.example.g9_comp3074.join.CollectionRestaurantJoinDao;
 import com.example.g9_comp3074.join.CollectionRestaurantJoinDatabase;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -142,9 +141,9 @@ public class InsideCollectionActivity extends AppCompatActivity {
                 startActivity(intent);
             });
 
-            // EDIT → open EditCardComponent (your existing editor)
+            // EDIT → open EditCardActivity (your existing editor)
             btnEdit.setOnClickListener(v -> {
-                Intent intent = new Intent(InsideCollectionActivity.this, EditCardComponent.class);
+                Intent intent = new Intent(InsideCollectionActivity.this, EditCardActivity.class);
                 intent.putExtra("restaurantId", restaurant.id);
                 startActivity(intent);
             });

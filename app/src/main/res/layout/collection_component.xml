@@ -32,6 +32,19 @@
             app:layout_constraintEnd_toStartOf="@+id/btnColDetail"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/btnColSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Short description..."
+            android:textColor="@color/colorOnSurface"
+            android:textSize="14sp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="@+id/btnColTitle"
+            app:layout_constraintEnd_toEndOf="@+id/btnColTitle"
+            app:layout_constraintTop_toBottomOf="@+id/btnColTitle" />
+
         <!-- Details Button (Material style) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnColDetail"

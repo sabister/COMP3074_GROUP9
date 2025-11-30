@@ -29,7 +29,7 @@ import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class EditCardComponent extends AppCompatActivity implements OnMapReadyCallback {
+public class EditCardActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     // View components from the XML layout
     private EditText etName, etDescription, etAddress, etPhone, etHours;
