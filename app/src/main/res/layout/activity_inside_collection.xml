@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Collection Name"
+            android:text="Restaurants"
             android:textColor="@color/colorOnBackground"
             android:textSize="22sp" />
     </LinearLayout>

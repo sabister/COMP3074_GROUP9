@@ -4,14 +4,20 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.g9_comp3074.collection_data.Collection;
+import com.example.g9_comp3074.collection_data.CollectionDatabase;
+import com.example.g9_comp3074.join.CollectionRestaurantJoin;
+import com.example.g9_comp3074.join.CollectionRestaurantJoinDatabase;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -80,6 +86,10 @@ public class RestActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+
+        Button btnAdd = findViewById(R.id.btnAddToCollection);
+        btnAdd.setOnClickListener(v -> openAddToCollectionDialog(restaurantId));
+
         setupBottomNavigation();
     }
 
@@ -132,6 +142,53 @@ public class RestActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }).start();
     }
+
+    private void openAddToCollectionDialog(int restaurantId) {
+        // Load all collections
+        new Thread(() -> {
+            List<Collection> collections = CollectionDatabase.getInstance(this)
+                    .collectionDao()
+                    .getAllCollections();
+
+            runOnUiThread(() -> {
+                if (collections.isEmpty()) {
+                    Toast.makeText(this, "No collections found. Create one first.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Convert to String[] for dialog
+                String[] collectionNames = new String[collections.size()];
+                for (int i = 0; i < collections.size(); i++) {
+                    collectionNames[i] = collections.get(i).getName();
+                }
+
+                new AlertDialog.Builder(this)
+                        .setTitle("Add to Collection")
+                        .setItems(collectionNames, (dialog, which) -> {
+                            int selectedCollectionId = collections.get(which).id;
+                            addRestaurantToCollection(selectedCollectionId, restaurantId);
+                        })
+                        .show();
+            });
+        }).start();
+    }
+
+    private void addRestaurantToCollection(int collectionId, int restaurantId) {
+
+        new Thread(() -> {
+            CollectionRestaurantJoinDatabase joinDb =
+                    CollectionRestaurantJoinDatabase.getInstance(this);
+
+            joinDb.collectionRestaurantJoinDao().insert(
+                    new CollectionRestaurantJoin(collectionId, restaurantId)
+            );
+
+            runOnUiThread(() ->
+                    Toast.makeText(this, "Added to collection!", Toast.LENGTH_SHORT).show()
+            );
+        }).start();
+    }
+
 
     private void setupBottomNavigation() {
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);

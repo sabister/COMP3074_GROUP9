@@ -88,6 +88,8 @@
                 android:layout_marginTop="4dp"
                 android:textColor="@color/colorOnSurface"
                 android:textSize="14sp" />
+
+
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -96,6 +98,13 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp" />
 
+            <Button
+                android:id="@+id/btnAddToCollection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center"
+                android:text="Add to Collection" />
         </LinearLayout>
     </ScrollView>
 

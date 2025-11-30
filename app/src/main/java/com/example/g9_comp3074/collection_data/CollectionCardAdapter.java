@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.g9_comp3074.EditCardComponent;
+import com.example.g9_comp3074.EditCollectionActivity;
+import com.example.g9_comp3074.InsideCollectionActivity;
 import com.example.g9_comp3074.R;
 import com.example.g9_comp3074.RestActivity;
 
@@ -46,21 +48,16 @@ public class CollectionCardAdapter extends RecyclerView.Adapter<CollectionCardAd
         holder.colSubtitle.setText(collection.description);
 
         holder.btnDetails.setOnClickListener(v -> {
-            // TODO: Create a new Activity to show the contents of a collection.
-            // For example, CollectionDetailActivity.class
-            // Intent intent = new Intent(context, CollectionDetailActivity.class);
-            // intent.putExtra("collectionId", collection.id);
-            // context.startActivity(intent);
-            Toast.makeText(context, "Details for " + collection.name, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, InsideCollectionActivity.class);
+            intent.putExtra("collectionId", collection.id);
+            context.startActivity(intent);
         });
 
         // Edit button should open an activity to edit the collection's details.
         holder.btnEdit.setOnClickListener(v -> {
-            // TODO: Create a new Activity to edit a collection.
-            // Intent intent = new Intent(context, EditCollectionActivity.class);
-            // intent.putExtra("collectionId", collection.id);
-            // context.startActivity(intent);
-            Toast.makeText(context, "Editing " + collection.name, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, EditCollectionActivity.class);
+            intent.putExtra("collectionId", collection.id);
+            context.startActivity(intent);
         });
 
         // Delete button

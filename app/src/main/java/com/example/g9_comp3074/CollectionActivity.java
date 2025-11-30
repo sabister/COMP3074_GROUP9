@@ -83,26 +83,29 @@ public class CollectionActivity extends AppCompatActivity {
     }
 
     private void setupNavigation() {
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        com.google.android.material.bottomnavigation.BottomNavigationView bottomNav =
+                findViewById(R.id.bottomNavigation);
+
         if (bottomNav != null) {
-            // Set the current item as selected
+            // Set the current item as selected before adding the listener
             bottomNav.setSelectedItemId(R.id.nav_collections);
 
             bottomNav.setOnItemSelectedListener(item -> {
                 int id = item.getItemId();
-                if (id == R.id.nav_search) {
+                if (id == R.id.nav_collections) {
+                    return true; // Already here
+                } else if (id == R.id.nav_search) {
                     startActivity(new Intent(CollectionActivity.this, MainActivity.class));
-                    finish(); // Optional: finish current activity to prevent back stack buildup
                     return true;
-                } else if (id == R.id.nav_collections) {
-                    // Already here, do nothing
+                } else if (id == R.id.nav_new) {
+                    startActivity(new Intent(CollectionActivity.this, NewActivity.class));
+                    return true;
+                } else if (id == R.id.nav_about) {
+                    startActivity(new Intent(CollectionActivity.this, AboutActivity.class));
                     return true;
                 }
-                // Add other navigation cases if needed
-                // else if (id == R.id.nav_new) { ... }
-
                 return false;
             });
         }
     }
-}
+}git
