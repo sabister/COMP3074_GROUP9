@@ -37,7 +37,7 @@ public class AboutActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
         if (bottomNav == null) return;
 
-        // Highlight "About"
+        //  Highlight "About"
         bottomNav.setSelectedItemId(R.id.nav_about);
 
         bottomNav.setOnItemSelectedListener(item -> {
