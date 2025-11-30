@@ -1,12 +1,14 @@
 package com.example.g9_comp3074;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.view.LayoutInflater;
+import android.content.Intent;import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
@@ -39,32 +41,39 @@ public class RestaurantCardAdapter extends RecyclerView.Adapter<RestaurantCardAd
         holder.tvSubtitle.setText(restaurant.description);
         holder.tvTags.setText(restaurant.tags);
 
-        // Details button
         holder.btnDetails.setOnClickListener(v -> {
             Intent intent = new Intent(context, RestActivity.class);
             intent.putExtra("restaurantId", restaurant.id);
             context.startActivity(intent);
         });
 
-        // Edit button
         holder.btnEdit.setOnClickListener(v -> {
             Intent intent = new Intent(context, EditCardComponent.class);
             intent.putExtra("restaurantId", restaurant.id);
             context.startActivity(intent);
         });
 
-        // Delete button
         holder.btnDelete.setOnClickListener(v -> {
-            restaurantDao.delete(restaurant);
-            restaurants.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, restaurants.size());
+            new Thread(() -> {
+                restaurantDao.delete(restaurant);
+                ((Activity) context).runOnUiThread(() -> {
+                    restaurants.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, restaurants.size());
+                    Toast.makeText(context, "Deleted: " + restaurant.name, Toast.LENGTH_SHORT).show();
+                });
+            }).start();
         });
     }
 
     @Override
     public int getItemCount() {
         return restaurants.size();
+    }
+
+    public void filterList(List<Restaurant> filteredList) {
+        this.restaurants = filteredList;
+        notifyDataSetChanged();
     }
 
     static class RestaurantViewHolder extends RecyclerView.ViewHolder {
