@@ -50,7 +50,7 @@
             android:id="@+id/tvRestaurantTags"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Tags: sushi • takeout • $$"
+            android:text="Tags"
             android:textColor="@color/colorOnSurface"
             android:textSize="13sp"
             android:layout_marginTop="6dp"
