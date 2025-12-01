@@ -10,14 +10,15 @@ public class Collection {
 
     public String name;
     public String description;
+    public String tags;
 
     public Collection(String name, String description) {
         this.name = name;
         this.description = description;
     }
-
     public String getName() {
         return name;
     }
+    public Collection() {}
 
 }

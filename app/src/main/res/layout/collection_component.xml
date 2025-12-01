@@ -2,6 +2,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/collectionCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,47 +13,37 @@
     <!-- Title -->
     <TextView
         android:id="@+id/btnColTitle"
-        android:layout_width="0dp"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="Restaurant i want to try"
+        android:text="List of restaurant i want to try"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnColDetail"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.105" />
-
+        app:layout_constraintTop_toTopOf="parent" />
     <!-- Description -->
     <TextView
         android:id="@+id/btnColSubtitle"
-        android:layout_width="0dp"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="Description of the restaurant"
+        android:text="Description of the collection"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnColDetail"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32" />
-
+        app:layout_constraintTop_toBottomOf="@+id/btnColTitle" />
+    <!-- Tags -->
     <!-- Details -->
     <Button
-            android:id="@+id/btnColDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Details"
-            app:layout_constraintBottom_toTopOf="@+id/btnColDelete"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+        android:id="@+id/btnColDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <!-- Edit -->
     <Button
@@ -61,20 +52,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Edit"
-        app:layout_constraintBottom_toTopOf="@+id/btnColDelete"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintTop_toBottomOf="@+id/btnColDetail" />
 
     <!-- Delete -->
     <Button
-            android:id="@+id/btnColDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Delete"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnColEdit" />
+        android:id="@+id/btnColDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnColEdit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -209,9 +209,6 @@ public class EditCardComponent extends AppCompatActivity implements OnMapReadyCa
         });
     }
 
-    /**
-     * Listens for changes in the address field to update the map in real-time.
-     */
     private void setupAddressListener() {
         etAddress.addTextChangedListener(new TextWatcher() {
             @Override
